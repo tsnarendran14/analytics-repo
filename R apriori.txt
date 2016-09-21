@@ -1,0 +1,42 @@
+Well, you can’t have non-factors columns in your transaction object.
+Here are a step by step instructions I used to do it (not optimized):
+**********
+# Retrieve the Type of columns
+typeCols <- sapply(AdultUCI, class)
+
+# Retrieve list of columns that are qualitative / categorical variables
+factCols <- grep('factor', typeCols)
+subAdultUCI <- AdultUCI[,factCols]
+
+Adult <- as(subAdultUCI, "transactions");
+rules <- apriori(Adult, parameter=list(support=0.01, confidence=0.5, minlen = 2));
+********
+Hope this gets you going.
+JM
+
+
+Rules for that problem:
+Solution:
+problem<-read.csv("C:/Users/Narendran/Desktop/Abi/Problem.csv",header = TRUE)
+problemDataFrame<-data.frame(problem)
+problemDataFrame$AdultorChild<-ifelse(problemDataFrame$Age>12,"Adult","Child")
+problemDataFrame$Survived<-ifelse(problemDataFrame==0,"No","Yes")
+problemDataFrame$Survived<-as.factor(problemDataFrame$Survived)//Changing to factor
+problemDataFrame$AdultorChild<-as.factor(problemDataFrame$AdultorChild)
+problemDataFrame$Pclass<-as.factor(problemDataFrame$Pclass)
+problemDataFrame$Cabin<-as.character(problemDataFrame$Cabin) //changing to character
+problemDataFrame$Ticket<-as.character(problemDataFrame$Ticket)
+typeCols<-sapply(problemDataFrame,class)
+factCols <- grep('factor', typeCols)
+subProblem<-problemDataFrame[,factCols]
+finalProblem<-as(subProblem,"transactions")
+rules<-apriori(finalProblem,parameter = list(support=0.07, confidence=0.9, minlen = 2), appearance = list(rhs=c("Survived=No", "Survived=Yes"), default="lhs"))
+write.csv(inspect(rules),file="C:/Users/Narendran/Desktop/Solution.csv")
+View(inspect(rules))
+plot(rules)
+plot(rules,method = "graph", control = list(type="items"))
+ plot(rules,method = "paracoord", control = list(reorder=TRUE))
+
+Rule for fmRadio
+I just took the top  for artist
+rules<-apriori(finalProblem,parameter = list(support=0.001, confidence=0.01, minlen = 2), appearance = list(rhs=c("artist=radiohead", "artist=the beatles", "artist=coldplay", "artist=red hot chili peppers","artist=muse","artist=metallica"), default="lhs"))

@@ -1,0 +1,6 @@
+,lhs,,rhs,support,confidence,lift
+1,"{Pclass=2,Sex=female}",=>,{Survived=Yes},0.078563412,0.921052632,2.382072977
+2,"{Pclass=1,Sex=female}",=>,{Survived=Yes},0.102132435,0.968085106,2.356731775
+3,"{Pclass=2,Sex=male,AdultorChild=Adult}",=>,{Survived=No},0.102132435,0.919191919,2.242234685
+4,"{Pclass=1,Sex=female,AdultorChild=Adult}",=>,{Survived=Yes},0.102132435,0.978494624,1.563659711
+5,"{Pclass=2,Sex=male,Embarked=S,AdultorChild=Adult}",=>,{Survived=No},0.092031425,0.921348315,1.56
